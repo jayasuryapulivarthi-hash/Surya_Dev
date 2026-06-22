@@ -5,7 +5,7 @@ from student_service import get_students, create_student, update_student
 from student_api_model import Student_api_model
 from student_db_model import Student_db_model
 
-app = FastAPI()
+student_app = FastAPI()
 
 def get_db():
     db = SessionLocal()
@@ -14,15 +14,15 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/students")
+@student_app.get("/students")
 def read_students(db: Session = Depends(get_db)):
     return get_students(db)
 
-@app.post("/students")
+@student_app.post("/students")
 def add_student(student: Student_api_model, db: Session = Depends(get_db)):
     return create_student(db, student)
     
-@app.put("/students/{student_id}")
+@student_app.put("/students/{student_id}")
 def modify_student(student_id: str, student: Student_api_model, db: Session = Depends(get_db)):
     updated_student = update_student(db, student_id, student)
     if updated_student is None:
