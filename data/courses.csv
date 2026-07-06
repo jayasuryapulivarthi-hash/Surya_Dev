@@ -1,0 +1,21 @@
+course_id,course_name,credits
+CS101,Introduction to Programming,3
+CS102,Data Structures and Algorithms,4
+CS103,Database Management Systems,3
+CS104,Web Development Fundamentals,3
+CS105,Machine Learning Basics,4
+CS106,Cloud Computing Essentials,3
+CS107,Cybersecurity Fundamentals,3
+CS108,Business Analytics,3
+CS109,Software Engineering Principles,4
+CS110,Artificial Intelligence Concepts,4
+CS111,Operating Systems,4
+CS112,Computer Networks,3
+CS113,Object Oriented Programming,3
+CS114,Data Visualization,3
+CS115,Big Data Analytics,4
+CS116,Mobile App Development,3
+CS117,DevOps and CI/CD,3
+CS118,Natural Language Processing,4
+CS119,Statistics for Data Science,3
+CS120,Information Systems Management,3

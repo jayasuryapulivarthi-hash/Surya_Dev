@@ -1,9 +1,7 @@
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import Column, String, Integer, Boolean, text
+from sqlalchemy import Column, Date, String, Integer, Boolean, text
+from app.db.database import Base
 
 
-class Base(DeclarativeBase):
-    pass
 
 
 class Student_db_model(Base):
@@ -23,3 +21,5 @@ class Student_db_model(Base):
     student_join_year = Column(Integer)
     is_active = Column(Boolean)
     address = Column(String)
+    start_date = Column(Date)
+    end_date = Column(Date)
