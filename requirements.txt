@@ -4,5 +4,4 @@ sqlalchemy
 pydantic
 psycopg[binary]
 python-dotenv
-git 
 pandas
