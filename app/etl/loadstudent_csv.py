@@ -7,7 +7,7 @@ from app.db.database import SessionLocal
 from app.models.student_db_model import Student_db_model
 
 
-CSV_FILE_PATH = Path(__file__).resolve().parent.parent / "data" / "students.csv"
+CSV_FILE_PATH = Path(__file__).resolve().parents[2] / "data" / "students.csv"
 
 
 def load_students():

@@ -6,7 +6,7 @@ from sqlalchemy import text, Date
 from app.db.database import SessionLocal,engine
 
 
-DATA_FOLDER = Path(__file__).resolve().parent.parent / "data"
+DATA_FOLDER = Path(__file__).resolve().parents[2] / "data"
 
 COURSES_FILE = DATA_FOLDER / "courses.csv"
 INSTRUCTORS_FILE = DATA_FOLDER / "instructors.csv"
