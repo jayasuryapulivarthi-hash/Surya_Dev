@@ -7,7 +7,8 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 class Base(DeclarativeBase):
     pass
-load_dotenv()
+ENV_FILE = os.getenv("ENV_FILE", ".env")
+load_dotenv(ENV_FILE)
 
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = quote_plus(os.getenv("DB_PASSWORD"))
