@@ -16,4 +16,4 @@ student_app.include_router(course_instructor_router)
 
 @student_app.get("/health")
 def health_check():
-    return {"status": "healthy"}
+    return {"status": " App is healthy"}
