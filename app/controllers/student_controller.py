@@ -35,4 +35,3 @@ def modify_student(student_id: str, student: Student_api_schema, db: Session = D
         raise HTTPException(status_code=404, detail="Student not found")
 
     return updated_student
-

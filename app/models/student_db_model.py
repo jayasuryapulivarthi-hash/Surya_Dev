@@ -2,6 +2,8 @@ from sqlalchemy import Column, Date, String, Integer, Boolean, text
 from app.db.database import Base
 
 
+
+
 class Student_db_model(Base):
     __tablename__ = "students_unt"
     __table_args__ = {"schema": "student"}
