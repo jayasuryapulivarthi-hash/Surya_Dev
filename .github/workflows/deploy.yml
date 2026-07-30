@@ -1,0 +1,53 @@
+name: Deploy FastAPI to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download repository code
+        uses: actions/checkout@v4
+
+      - name: Connect to AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-2
+
+      - name: Create deployment ZIP
+        run: zip -r deployment.zip . -x ".git/*" ".github/*" ".venv/*" ".vscode/*" ".env*"
+
+      - name: Get Elastic Beanstalk S3 bucket
+        run: |
+          BUCKET=$(aws elasticbeanstalk create-storage-location --query S3Bucket --output text)
+          echo "EB_BUCKET=$BUCKET" >> "$GITHUB_ENV"
+
+      - name: Upload ZIP to AWS
+        run: aws s3 cp deployment.zip "s3://${EB_BUCKET}/deployments/${GITHUB_SHA}.zip"
+
+      - name: Create application version
+        run: |
+          aws elasticbeanstalk create-application-version \
+            --application-name "Career-Platform" \
+            --version-label "${GITHUB_SHA}" \
+            --source-bundle S3Bucket="${EB_BUCKET}",S3Key="deployments/${GITHUB_SHA}.zip"
+
+      - name: Deploy application version
+        run: |
+          aws elasticbeanstalk update-environment \
+            --environment-name "Career-Platform-env" \
+            --version-label "${GITHUB_SHA}"
+
+      - name: Wait for deployment
+        run: |
+          aws elasticbeanstalk wait environment-updated \
+            --environment-name "Career-Platform-env"
