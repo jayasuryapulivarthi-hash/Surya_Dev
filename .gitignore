@@ -7,3 +7,9 @@ __pycache__/
 .env.*
 env.docker
 .env.aws
+.venv/
+.vscode/
+__pycache__/
+*.pyc
+.env
+.env.*

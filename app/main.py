@@ -13,3 +13,7 @@ student_app.include_router(student_router)
 student_app.include_router(course_router)
 student_app.include_router(instructor_router)
 student_app.include_router(course_instructor_router)
+
+@student_app.get("/health")
+def health_check():
+    return {"status": "healthy"}
