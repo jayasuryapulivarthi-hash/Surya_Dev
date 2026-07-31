@@ -16,11 +16,21 @@ jobs:
     steps:
       - name: Download repository code
         uses: actions/checkout@v4
+      
+      - name: Show OIDC token claims
+        run: |
+          TOKEN=$(curl -sS \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" \
+            | jq -r '.value')
+          PAYLOAD=$(echo "$TOKEN" | cut -d. -f2)
+          while [ $(( ${#PAYLOAD} % 4 )) -ne 0 ]; do PAYLOAD="${PAYLOAD}="; done
+          echo "$PAYLOAD" | tr '_-' '/+' | base64 -d | jq '{iss, aud, sub, repository}'
 
       - name: Connect to AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::225642769132:role/GitHubActions-ElasticBeanstalk-Role
           aws-region: us-east-2
 
       - name: Create deployment ZIP
@@ -50,4 +60,4 @@ jobs:
       - name: Wait for deployment
         run: |
           aws elasticbeanstalk wait environment-updated \
-            --environment-name "Career-Platform-env"
+            --environment-name "Career-Platform-env"  
